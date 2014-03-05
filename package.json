@@ -1,0 +1,55 @@
+{
+  "name": "Get-On-It",
+  "version": "0.1.0",
+  "author": {
+    "name": "lithiumjake",
+    "email": "lithiumjake@mail.com",
+    "url": "lithiumjake.github.io"
+  },
+  "license": "MIT",
+  "description": "To Do List",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lithiumjake/getitdone.git"
+  },
+  "bugs": "https://github.com/lithiummjake/getitdone/issues",
+  "homepage": "http://lithiumjake.github.io/getitdone",
+  "devDependencies": {
+    "testem": "~0.6.8",
+    "mocha": "~1.17.1",
+    "chai": "~1.9.0",
+    "sinon": "~1.8.2",
+    "sinon-chai": "~2.5.0",
+    "browserify": "~3.32.0",
+    "watchify": "~0.6.1",
+    "uglify-js": "~2.4.12",
+    "gulp": "~3.5.5",
+    "gulp-livereload": "~1.1.1",
+    "gulp-concat": "~2.1.7",
+    "gulp-less": "~1.2.2",
+    "gulp-rename": "~1.1.0",
+    "vinyl-source-stream": "~0.1.1",
+    "gulp-plumber": "~0.5.6",
+    "gulp-notify": "~1.0.0-beta",
+    "gulp-file-include": "~0.1.0",
+    "tiny-lr": "0.0.5"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/testem ci",
+    "bdd": "./node_modules/.bin/testem -g",
+    "watch": "./node_modules/.bin/watchify ./spec/tests.js -o ./spec/browserified.js",
+    "build-debug": "node_modules/.bin/browserify src/scripts/index.js -d > app/js/app.js",
+    "build-min": "node_modules/.bin/browserify src/scripts/index.js | uglifyjs > app/js/app.min.js",
+    "build": "npm run build-debug && npm run build-min",
+    "new": "npm run symrepos",
+    "symrepos": "ln -s ~/node_modules node_modules && ln -s ~/bower_components bower_components",
+    "ghp": "git checkout -b gh-pages",
+    "gulp": "node_modules/.bin/gulp"
+  },
+  "dependencies": {
+    "vue": "~0.9.3",
+    "jquery": "~2.1.0",
+    "bootstrap": "git://github.com/twbs/bootstrap#v3.1.1",
+    "loStorage.js": "git://github.com/js-coder/loStorage.js"
+  }
+}

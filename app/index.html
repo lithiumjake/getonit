@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Get On It!</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="tweak.css">
+</head>
+
+<body>
+  <div id="v-app">
+    <div id="wrapper">
+
+      <div id="sidebar-wrapper">
+        <div class="list-group">
+          <span class="brand list-group-item"><i class="fa fa-check-square-o fa-lg fa-fw"></i>Get On It!</span>
+          <div v-repeat="lists" v-component="Lists"></div>
+        </div>
+        <div class="list-controls">
+          <a v-on="click:addList" href="#"> <i class="fa fa-plus fa-fw"></i> new list</a>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <a v-on="click:removeList" href="#"><i class="fa fa-trash-o fa-fw"></i> delete list</a>
+        </div>
+      </div>
+
+      <div id="page-content-wrapper">
+
+        <div id="menu-toggle" class="content-header">
+         <a href="#" class="btn btn-default"><i class="fa fa-bars"></i></a>
+         <h1>{{lists[currentList].name}}</h1>
+        </div>
+
+        <div class="page-content inset">
+          <section id="item-entry">
+            <input v-model="msg" v-on="keyup:addItem | key enter" type="text" class="form-control" id="new-item-input" placeholder="Add a new item...">
+          </section>
+          <section id="important">
+            <div v-ref="importants" v-repeat="lists[currentList].items" v-component="ImportantItem"></div>
+          </section>
+          <hr />
+          <section id="items">
+            <div v-ref="items" v-repeat="lists[currentList].items" v-component="ListItem"></div>
+          </section>
+          <hr />
+          <section id="completed">
+            <div v-ref="completed" v-repeat="lists[currentList].items" v-component="CompleteItem"></div>
+          </section>
+        </div> <!-- page-content -->
+      </div> <!-- page-content-wrapper -->
+    </div> <!-- wrapper -->
+  </div>  <!-- v-app -->
+
+  <script type="x-template" id="importantTemplate">
+    <div v-on="dblclick:configItem"
+         v-if="important && !complete"
+         class="important-container"> 
+      <i v-on="click:toggleComplete(this)" class="fa fa-lg fa-fw fa-square-o"></i>
+      <span>{{task}}</span > 
+      <i v-on="click:toggleImportant(this)" class="star fa fa-lg fa-star"></i>
+      <div id="item-config-{{$index}}" class="collapse">
+        <hr class="breaker"/>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-11">
+              <input type="text"
+                     class="form-control"
+                     v-model="task"
+                     v-on="keyup:changeItemName | key enter">
+            </div>
+            <div class="col-xs-1">
+              <button type="button"
+                      class="btn btn-danger pull-right"
+                      v-on="click: removeItem(this)"><i class="fa fa-lg fa-trash-o"></i></button>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </script>
+
+  <script type="x-template" id="itemTemplate">
+    <div v-on="dblclick:configItem"
+         v-if="!important && !complete"
+         class="item-container">
+      <i v-on="click:toggleComplete(this)" class="fa fa-lg fa-fw fa-square-o"></i>
+      <span>{{task}}</span>
+      <i v-on="click:toggleImportant(this)" class="star fa fa-lg fa-star-o"></i>
+      <div id="item-config-{{$index}}" class="collapse">
+        <hr class="breaker"/>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-11">
+              <input type="text"
+                     class="form-control"
+                     v-model="task"
+                     v-on="keyup:changeItemName | key enter">
+            </div>
+            <div class="col-xs-1">
+              <button type="button"
+                      class="btn btn-danger pull-right"
+                      v-on="click: removeItem(this)"><i class="fa fa-lg fa-trash-o"></i></button>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </script>
+
+  <script type="x-template" id="completedTemplate">
+    <div v-on="dblclick:configItem"
+         v-if="complete"
+         class="completed-container"> 
+      <i v-on="click:toggleComplete(this)" class="fa fa-lg fa-fw fa-check-square-o"></i>
+      <span class="done">{{task}}</span> 
+      <i v-on="click:toggleImportant(this)" class="star fa fa-lg fa-star-o"></i>
+      <div id="item-config-{{$index}}" class="collapse">
+        <hr class="breaker"/>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-11">
+              <input type="text"
+                     class="form-control"
+                     v-model="task"
+                     v-on="keyup:changeItemName | key enter">
+            </div>
+            <div class="col-xs-1">
+              <button type="button"
+                      class="btn btn-danger pull-right"
+                      v-on="click: removeItem(this)"><i class="fa fa-lg fa-trash-o"></i></button>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </script>
+
+  <script type="x-template" id="listTemplate">
+    <a v-class="active: currentList===this.$index" 
+       v-on="click:selectList(this.$index), dblclick:configList"
+       href="#"
+       class="list-group-item" 
+       style="border-radius:0px">
+      <i class="fa {{icon}} fa-lg fa-fw"></i>
+      {{name}}
+      <span class="count">{{items.length - complete > 0 ? items.length - complete: undefined}}</span>
+    </a>
+    <div id="list-config-{{$index}}" class="collapse">
+      <div class="form-group"> 
+        <input type="text"
+               class="form-control"
+               v-model="name"
+               v-on="keyup:changeListName | key enter">
+      </div>
+    </div>
+  </script>
+  
+  <script src="js/app.js"></script>
+</body>
+
+</html>
+
