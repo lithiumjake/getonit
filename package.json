@@ -43,7 +43,7 @@
     "build": "npm run build-debug && npm run build-min",
     "new": "npm run symrepos",
     "symrepos": "ln -s ~/node_modules node_modules && ln -s ~/bower_components bower_components",
-    "ghp": "git checkout -b gh-pages",
+    "ghp": "git checkout master; git subtree push --prefix app origin gh-pages",
     "gulp": "node_modules/.bin/gulp"
   },
   "dependencies": {

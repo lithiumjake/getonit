@@ -29,7 +29,8 @@ Vue.component('Lists', {
     msg: ""
   },
   methods: {
-    toggleComplete: function(item) {
+    toggleComplete: function(e) {
+      var item = e.targetVM
       if (item.complete) {
         item.complete = false
         this.lists[this.currentList].complete -= 1
@@ -38,7 +39,8 @@ Vue.component('Lists', {
         this.lists[this.currentList].complete += 1
       }
     },
-    toggleImportant: function(item) {
+    toggleImportant: function(e) {
+      var item = e.targetVM
       item.important = !item.important
     },
     addItem: function() {
@@ -46,7 +48,8 @@ Vue.component('Lists', {
       this.lists[this.currentList].items.push({task:this.msg, complete:false, important:false})
       this.msg = ""
     },
-    removeItem: function(item) {
+    removeItem: function(e) {
+      var item = e.targetVM
       if (item.complete) {
         this.lists[this.currentList].complete -= 1
       }
@@ -72,7 +75,8 @@ Vue.component('Lists', {
       var item = e.targetVM
       $("#item-config-" + item.$index).collapse('hide')
     },
-    selectList: function(listIndex) {
+    selectList: function(e) {
+      var listIndex = e.targetVM.$index
       this.currentList = listIndex
     },
     configList: function(e) {

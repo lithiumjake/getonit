@@ -57,9 +57,9 @@
     <div v-on="dblclick:configItem"
          v-if="important && !complete"
          class="important-container"> 
-      <i v-on="click:toggleComplete(this)" class="fa fa-lg fa-fw fa-square-o"></i>
+      <i v-on="click:toggleComplete" class="fa fa-lg fa-fw fa-square-o"></i>
       <span>{{task}}</span > 
-      <i v-on="click:toggleImportant(this)" class="star fa fa-lg fa-star"></i>
+      <i v-on="click:toggleImportant" class="star fa fa-lg fa-star"></i>
       <div id="item-config-{{$index}}" class="collapse">
         <hr class="breaker"/>
         <div class="form-group">
@@ -73,7 +73,7 @@
             <div class="col-xs-1">
               <button type="button"
                       class="btn btn-danger pull-right"
-                      v-on="click: removeItem(this)"><i class="fa fa-lg fa-trash-o"></i></button>
+                      v-on="click: removeItem"><i class="fa fa-lg fa-trash-o"></i></button>
             </div>
           </div>
         </div> 
@@ -85,9 +85,9 @@
     <div v-on="dblclick:configItem"
          v-if="!important && !complete"
          class="item-container">
-      <i v-on="click:toggleComplete(this)" class="fa fa-lg fa-fw fa-square-o"></i>
+      <i v-on="click:toggleComplete" class="fa fa-lg fa-fw fa-square-o"></i>
       <span>{{task}}</span>
-      <i v-on="click:toggleImportant(this)" class="star fa fa-lg fa-star-o"></i>
+      <i v-on="click:toggleImportant" class="star fa fa-lg fa-star-o"></i>
       <div id="item-config-{{$index}}" class="collapse">
         <hr class="breaker"/>
         <div class="form-group">
@@ -101,7 +101,7 @@
             <div class="col-xs-1">
               <button type="button"
                       class="btn btn-danger pull-right"
-                      v-on="click: removeItem(this)"><i class="fa fa-lg fa-trash-o"></i></button>
+                      v-on="click: removeItem"><i class="fa fa-lg fa-trash-o"></i></button>
             </div>
           </div>
         </div> 
@@ -113,9 +113,9 @@
     <div v-on="dblclick:configItem"
          v-if="complete"
          class="completed-container"> 
-      <i v-on="click:toggleComplete(this)" class="fa fa-lg fa-fw fa-check-square-o"></i>
+      <i v-on="click:toggleComplete" class="fa fa-lg fa-fw fa-check-square-o"></i>
       <span class="done">{{task}}</span> 
-      <i v-on="click:toggleImportant(this)" class="star fa fa-lg fa-star-o"></i>
+      <i v-on="click:toggleImportant" class="star fa fa-lg fa-star-o"></i>
       <div id="item-config-{{$index}}" class="collapse">
         <hr class="breaker"/>
         <div class="form-group">
@@ -129,7 +129,7 @@
             <div class="col-xs-1">
               <button type="button"
                       class="btn btn-danger pull-right"
-                      v-on="click: removeItem(this)"><i class="fa fa-lg fa-trash-o"></i></button>
+                      v-on="click: removeItem"><i class="fa fa-lg fa-trash-o"></i></button>
             </div>
           </div>
         </div> 
@@ -139,7 +139,7 @@
 
   <script type="x-template" id="listTemplate">
     <a v-class="active: currentList===this.$index" 
-       v-on="click:selectList(this.$index), dblclick:configList"
+       v-on="click:selectList, dblclick:configList"
        href="#"
        class="list-group-item" 
        style="border-radius:0px">
